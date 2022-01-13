@@ -80,9 +80,9 @@ def run_manager():
         talk('current stock is' + entity + value)
     elif 'change' in command:
         # space for open cv to recognise currency
-        remaining=currency-
+        remaining=currency
         pass
-    elif 'sure sure sure' in command:
+    elif 'sure' in command:
         dial_numbers(DIAL_NUMBERS)
         
     elif 'time' in command:
@@ -99,6 +99,53 @@ def run_manager():
         talk('I Love You')
     elif 'joke' in command:
         talk(pyjokes.get_joke())
+    elif 'fine' in command or "good" in command:
+            speak("It's good to know that your fine")    
+    elif 'how are you' in command:
+            speak("I am fine, Thank you")
+            speak("How are you, Sir")
+    elif "who made you" in command or "who created you" in command:
+            speak("I have been created by Manan.") 
+    elif "weather" in command:
+             
+            # Google Open weather website
+            # to get API of Open weather
+            api_key = "Api key"
+            base_url = "http://api.openweathermap.org / data / 2.5 / weather?"
+            speak(" City name ")
+            print("City name : ")
+            city_name = takeCommand()
+            complete_url = base_url + "appid =" + api_key + "&q =" + city_name
+            response = requests.get(complete_url)
+            x = response.json()
+             
+            if x["cod"] != "404":
+                y = x["main"]
+                current_temperature = y["temp"]
+                current_pressure = y["pressure"]
+                current_humidiy = y["humidity"]
+                z = x["weather"]
+                weather_description = z[0]["description"]
+                print(" Temperature (in kelvin unit) = " +str(current_temperature)+"\n atmospheric pressure (in hPa unit) ="+str(current_pressure) +"\n humidity (in percentage) = " +str(current_humidiy) +"\n description = " +str(weather_description))
+             
+            else:
+                speak(" City Not Found ")  
+
+    elif 'send a mail' in command:
+        try:
+            speak("What should I say?")
+            content = takeCommand()
+            speak("whome should i send")
+            to = input()   
+            sendEmail(to, content)
+            speak("Email has been sent !")
+        except Exception as e:
+            print(e)
+            speak("I am not able to send this email")
+    elif 'exit' in command:
+            speak("Thanks for giving me your time")
+            exit()        
+
     else:
         talk('Please say the command again.')
 
